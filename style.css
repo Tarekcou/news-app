@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components{
+  .blogCard{
+    @apply space-y-3 max-w-[400px] max-h-[500px] md:w-[400px] cursor-pointer 
+     p-4 rounded-lg border;
+  }
+  .cardImg{
+    @apply rounded-xl w-full h-[200px] bg-cover border
+  }
+  .blogCard:hover{
+    @apply shadow-2xl;
+  }
+}
