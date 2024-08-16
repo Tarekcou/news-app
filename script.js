@@ -30,7 +30,7 @@ searchBtn.addEventListener("click", async () => {
   if (query !== "") {
     try {
 
-      fetchNews(query)
+      // fetchNews(query)
       const articles = await fetchNewsQuery(query);
       displayBlocks(articles);
       
