@@ -1,14 +1,19 @@
-const api_key = "837ad1ef90634598b6b668240af50e7f"
+const api_key = "30cb82d0e7374199be1f612c4437414f"
 const blogContainer = document.getElementById("blog-container")
 const search = document.getElementById("search");
 const searchBtn = document.getElementById("searchBtn");
+const spinner=document.getElementById("spinner");
 async function fetchNews(query) {
   // https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=837ad1ef90634598b6b668240af50e7f
+  spinner.style.visibility="visible";
   try {
-    const api_Url = `https://newsapi.org/v2/top-headlines?sources=techcrunch&pageSize=10&apikey=${api_key}`;
+    const api_Url = `https://newsapi.org/v2/top-headlines?sources=techcrunch&pageSize=15&apikey=${api_key}`;
     const response = await fetch(api_Url);
+
     const data = await response.json();
-    console.log(data)
+    console.log(response)
+    spinner.style.visibility="hidden";
+    spinner.style.display="none";
     return data.articles
 
   }
@@ -19,12 +24,16 @@ async function fetchNews(query) {
   }
 }
 searchBtn.addEventListener("click", async () => {
+  spinner.style.visibility="visible";
+  spinner.style.display="";
   const query = search.value.trim();
   if (query !== "") {
     try {
+
       fetchNews(query)
       const articles = await fetchNewsQuery(query);
-      displayBlocks(articles)
+      displayBlocks(articles);
+      
     }
     catch (error) {
       console.log("error search",error)
@@ -36,9 +45,11 @@ async function fetchNewsQuery(query) {
 
   try {
     console.log(query)
-    const api_Url = `https://newsapi.org/v2/everything?q=${query}&sortBy=publishedAt&apiKey=${api_key}`;
+    const api_Url = `https://newsapi.org/v2/everything?q=${query}&pageSize=15&sortBy=publishedAt&apiKey=${api_key}`;
     const response = await fetch(api_Url);
     const data = await response.json();
+    spinner.style.visibility="hidden";
+    spinner.style.display="none"
     console.log(data)
     return data.articles 
 
@@ -51,6 +62,7 @@ async function fetchNewsQuery(query) {
 }
 
 function displayBlocks(articles) {
+  // footer.style.visibility="visible";
   blogContainer.innerHTML = "";
   console.log(articles)
   articles.forEach(article => {
@@ -87,7 +99,7 @@ function displayBlocks(articles) {
   try {
     const articles = await fetchNews()
         // console.log(articles)
-
+    
     displayBlocks(articles)
   }
   catch (error) {
